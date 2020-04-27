@@ -1,0 +1,67 @@
+#!/bin/bash
+
+
+case "${1:-}" in
+
+	# Edit this file
+	edit)
+		sudo vi $(which $0);;
+
+	# Edit lets auto-complete prompt file
+	edit-completion)
+		prompt_file=/etc/bash_completion.d/lets-prompt
+		sudo vi $prompt_file 
+		echo "source ${prompt_file}";;
+
+	# Check battery
+	battery)
+		acpi -b | grep -P -o '[0-9]+(?=%)';;
+
+	# Trash a file
+	trash)
+		gio trash "$2";;
+
+	# Restart network
+	reconnect)
+	    	sudo service network-manager restart;;
+
+	# Mount windows disks
+	mount)
+		sudo mkdir /media/weitungchen/OS/
+		sudo mount /dev/sda4 /media/weitungchen/OS/;;
+
+	# Umount windows disks
+	unmount)
+		sudo umount /media/weitungchen/OS/
+		sudo umount /media/weitungchen/Data/
+		sudo rmdir /media/weitungchen/OS/
+		sudo rmdir /media/weitungchen/Data/;;
+
+	# Open file/folder with default editor/browser
+	open)
+		xdg-open $2 &>/dev/null &;;
+
+	# Open sublime project
+	subl)
+		subl --project app.sublime-project;;
+
+	# Run jekyll dev mode
+	jekyll)
+		jekyll serve --config _config.yml,_config_dev.yml;;
+
+	# Run program
+	run)
+		case "${2:-}" in
+			intellij) idea &>/dev/null &;;
+			sublime) subl;;
+			spyder) spyder;;
+			*) echo "intellij sublime spyder";;
+		esac;;
+
+	# Print out all options
+	*)
+		echo "edit edit-completion battery trash reconnect mount umount open subl jekyll run";;
+
+esac
+
+
