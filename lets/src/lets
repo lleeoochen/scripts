@@ -9,7 +9,7 @@ case "${1:-}" in
 
 	# Edit lets auto-complete prompt file
 	edit-completion)
-		prompt_file=/etc/bash_completion.d/lets-prompt
+		prompt_file=/etc/bash_completion.d/lets-completion
 		sudo vi $prompt_file 
 		echo "source ${prompt_file}";;
 
@@ -47,7 +47,8 @@ case "${1:-}" in
 
 	# Run jekyll dev mode
 	jekyll)
-		jekyll serve --config _config.yml,_config_dev.yml;;
+		shift
+		jekyll serve --config _config.yml,_config_dev.yml "$@";;
 
 	# Run program
 	run)
@@ -63,5 +64,4 @@ case "${1:-}" in
 		echo "edit edit-completion battery trash reconnect mount umount open subl jekyll run";;
 
 esac
-
 

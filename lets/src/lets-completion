@@ -1,0 +1,29 @@
+#
+# Completion Functions: https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion-Builtins.html#Programmable-Completion-Builtins
+# Completion Variables: https://devmanual.gentoo.org/tasks-reference/completion/index.html
+#
+
+_lets() 
+{
+	COMPREPLY=()
+	local cur="${COMP_WORDS[COMP_CWORD]}"
+	local prev="${COMP_WORDS[COMP_CWORD-1]}"
+	local line="${COMP_LINE}"	
+	local opts flags
+
+	case "$prev" in
+	open|trash)
+		flags='-f';;
+	run)
+		opts=$(lets run);;
+	lets) 
+		opts=$(lets);;
+	esac
+
+	if [[ ${cur} == * ]] ; then
+		COMPREPLY=( $(compgen ${flags} -W "${opts}" -- ${cur}) )
+	fi
+}
+
+complete -F _lets lets
+
