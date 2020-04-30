@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sudo ln src/lets /usr/bin/
-sudo ln src/lets-completion /etc/bash_completion.d/
+sudo ln -f src/lets /usr/bin/
+sudo ln -f src/lets-completion /etc/bash_completion.d/
 
